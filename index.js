@@ -27,6 +27,30 @@ app.get('/',(req,res)=>{
     res.send("hello world");  
 })
 
+app.get('/logo.jpg',(req,res)=>{
+    res.sendFile(path.join(__dirname,"logo.jpg"))
+})
+
+app.post('/razorpay', async (req,res)=>{
+    const payment_capture = 1
+    const amount = 499
+    const currency = 'INR'
+
+    const options = {
+        amount : amount*100,
+        currency:currency,
+        receipt:shortid_generate(),
+        payment_capture
+
+    }
+
+    try{
+        const response = await razorpay.orders.create('options')
+    } catch(error){
+        console.log('error')
+    }
+})
+
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/order', require('./routes/order'))
 
