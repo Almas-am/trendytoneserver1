@@ -9,13 +9,13 @@ const path = require('path');
 
 const shortid = require('shortid');
 
-const razorpay = require('razorpay');
+const Razorpay = require('razorpay');
 
 const port=process.env.PORT || 8000;
 
 //initialize razorpay credentials
 
-const razorpay =  new razorpay({
+const razorpay =  new Razorpay({
     key_id: "rzp_test_ATIDqpJJTUeTEw",
     key_secret:"Atf2j4yxFH1kmNqenFwGwp2w"
 
@@ -46,8 +46,14 @@ app.post('/razorpay', async (req,res)=>{
 
     try{
         const response = await razorpay.orders.create('options')
+        console.log(response)
+        res.json({
+            id:response.id,
+            currency:response.currency,
+            amount:response.amount
+        })
     } catch(error){
-        console.log('error')
+        console.log(error)
     }
 })
 
